@@ -1,5 +1,17 @@
-import Header from "../components/header";
+import { useEffect } from "react";
 
-export default function Home() {
+export default function Home(props) {
   return <p>index</p>;
+}
+
+export async function getStaticProps() {
+  const response = await fetch("http://localhost:3333/episodes");
+  const data = await response.json();
+
+  return {
+    props: {
+      episodes: data,
+    },
+    revalidate: 60 * 60 * 8, // revalida a cada 8h
+  };
 }
